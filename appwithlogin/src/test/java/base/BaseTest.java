@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
+import support.PropertiesManager;
 import support.Timeouts;
 
 import java.io.File;
@@ -22,13 +23,19 @@ public class BaseTest {
 
     protected static AppiumDriver<MobileElement> driver;
     private static final Logger LOG = LoggerFactory.getLogger(AbstractLoginTest.class);
+    public static PropertiesManager propertiesManager = new PropertiesManager();
 
 
     @BeforeMethod(alwaysRun = true)
     public void preConditions() throws DriverIsNotInitException {
+        String platformName = propertiesManager.getPlaform();
+        LOG.info("------------------------ Platform = " + platformName);
+        if(platformName == null){
+            platformName = "Android";
+        }
         LOG.info("----------------------- INITIALISATION -----------------");
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-        desiredCapabilities.setCapability("platformName", "Android");
+        desiredCapabilities.setCapability("platformName", platformName);
         desiredCapabilities.setCapability("deviceName", "GGGGNexus  6 MobileAutomation");
         desiredCapabilities.setCapability("platformVersion", "8.0");
         desiredCapabilities.setCapability("app", new File("src/app/testproject-demo-app.apk"));

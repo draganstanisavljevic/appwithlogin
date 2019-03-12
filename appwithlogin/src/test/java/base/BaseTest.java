@@ -29,7 +29,6 @@ public class BaseTest {
     @BeforeMethod(alwaysRun = true)
     public void preConditions() throws DriverIsNotInitException {
         String platformName = propertiesManager.getPlaform();
-        LOG.info("------------------------ Platform = " + platformName);
         if(platformName == null){
             platformName = "Android";
         }
